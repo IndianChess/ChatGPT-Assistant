@@ -1,7 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 interface ApiKeyContextType {
     apiKey: string;
     setApiKey: (key: string) => void;
@@ -16,6 +15,8 @@ export const ApiKeyContextProvider: React.FC<{ children: React.ReactNode }> = ({
     const [apiKey, setApiKeyState] = useState<string>('');
 
     // Load API key from storage on component mount
+    // For the Hugging Face implementation, we don't actually need an API key
+    // but we'll keep the structure for compatibility
     useEffect(() => {
         const loadApiKey = async () => {
             const key = await AsyncStorage.getItem('apiKey');
@@ -31,7 +32,6 @@ export const ApiKeyContextProvider: React.FC<{ children: React.ReactNode }> = ({
         await AsyncStorage.setItem('apiKey', key);
     };
 
-
     return (
         <ApiKeyContext.Provider value={{ apiKey, setApiKey }}>
             {children}
@@ -41,7 +41,6 @@ export const ApiKeyContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
 // Custom hook to use the API key context
 export const useApiKeyContext = (): ApiKeyContextType => {
-
     const context = useContext(ApiKeyContext);
 
     if (!context) {

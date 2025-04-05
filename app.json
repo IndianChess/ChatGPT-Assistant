@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ChatGptAssistant",
-    "slug": "ChatGptAssistant",
+    "name": "Ami",
+    "slug": "Ami",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +15,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.IshPlays.AmiApp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +29,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7410599a-aae9-4f1f-af40-08cb1a2161b0"
+      }
     }
   }
 }

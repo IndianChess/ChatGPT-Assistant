@@ -1,67 +1,40 @@
-import { View, Text, Alert, StyleSheet, TextInput, Pressable } from 'react-native';
-import React, { useState } from 'react';
-import Toast from 'react-native-root-toast';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React from 'react';
 import * as WebBrowser from 'expo-web-browser';
-import { useApiKeyContext } from '../contexts/apiKeyContext';
 
 const ApiKeyPage = () => {
-
-  const { apiKey, setApiKey } = useApiKeyContext();
-  const [apiKeyInput, setApiKeyInput] = useState(apiKey);
-
-  // Function to open the OpenAI API keys page in a browser
-  const openApiKeysPage = () => {
-    WebBrowser.openBrowserAsync('https://platform.openai.com/api-keys');
-  };
-
-  // Save API key to context
-  const saveApiKey = async () => {
-    if (apiKeyInput.trim().length > 0) {
-      setApiKey(apiKeyInput);
-      Toast.show('API key saved', { duration: Toast.durations.SHORT });
-    } else {
-      Alert.alert('Error', 'Please enter a valid API key');
-    }
-  };
-
-  // Remove API key from context
-  const removeApiKey = async () => {
-    setApiKey('');
-    setApiKeyInput('');
-    Toast.show('API key removed', { duration: Toast.durations.SHORT });
-  };
-
-  // Function to handle button press
-  const handleButtonPress = () => {
-    if (apiKey) {
-      removeApiKey();
-    } else {
-      saveApiKey();
-    }
+  // Function to open the Hugging Face Space page in a browser
+  const openHuggingFaceSpace = () => {
+    WebBrowser.openBrowserAsync('https://huggingface.co/spaces/Nymbo/Qwen2.5-Coder-32B-Instruct-Serverless');
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>About This App</Text>
+      
       <Text style={styles.label}>
-        To connect with AI, add an API key. You can obtain an API key from
-        {' '}
-        <Text style={styles.linkText} onPress={openApiKeysPage}>
-          https://platform.openai.com/api-keys
-        </Text>
-        .
+        This application uses the Qwen2.5-Coder-32B-Instruct-Serverless model hosted on Hugging Face Spaces.
       </Text>
-      <TextInput
-        value={apiKeyInput}
-        onChangeText={setApiKeyInput}
-        placeholder='Enter your API key'
-        autoCorrect={false}
-        autoCapitalize='none'
-        style={styles.input}
-        editable={!apiKey}
-      />
-      <Pressable onPress={handleButtonPress} style={styles.button}>
+      
+      <Text style={styles.infoText}>Model Features:</Text>
+      <Text style={styles.bulletPoint}>• Powerful coding assistance</Text>
+      <Text style={styles.bulletPoint}>• Technical problem solving</Text>
+      <Text style={styles.bulletPoint}>• General AI assistance</Text>
+      
+      <Text style={styles.linkLabel}>
+        You can learn more about this model at:
+      </Text>
+      <Text style={styles.linkText} onPress={openHuggingFaceSpace}>
+        huggingface.co/spaces/Nymbo/Qwen2.5-Coder-32B-Instruct-Serverless
+      </Text>
+      
+      <Text style={styles.noteText}>
+        Note: This app connects directly to the Hugging Face API and does not require an API key.
+      </Text>
+      
+      <Pressable onPress={openHuggingFaceSpace} style={styles.button}>
         <Text style={styles.buttonText}>
-          {apiKey ? 'Remove' : 'Save'}
+          Visit Hugging Face Space
         </Text>
       </Pressable>
     </View>
@@ -75,22 +48,44 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     backgroundColor: '#0D0D0D',
   },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 16,
+  },
   label: {
     fontSize: 16,
     color: '#fff',
+    marginBottom: 16,
+  },
+  infoText: {
+    fontSize: 16,
+    color: '#fff',
+    marginTop: 8,
+  },
+  bulletPoint: {
+    fontSize: 16,
+    color: '#fff',
+    marginLeft: 8,
+    marginTop: 4,
+  },
+  linkLabel: {
+    fontSize: 16,
+    color: '#fff',
+    marginTop: 16,
   },
   linkText: {
     color: '#0F66CC',
     textDecorationLine: 'underline',
-  },
-  input: {
     fontSize: 16,
-    borderWidth: 2,
-    borderColor: '#2F2F2F',
-    borderRadius: 8,
-    padding: 8,
-    marginVertical: 24,
-    backgroundColor: '#fff',
+    marginTop: 4,
+  },
+  noteText: {
+    fontSize: 14,
+    color: '#aaa',
+    marginTop: 24,
+    fontStyle: 'italic',
   },
   button: {
     backgroundColor: '#18191a',
@@ -100,6 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     alignSelf: 'center',
     borderWidth: 2,
+    marginTop: 24,
   },
   buttonText: {
     color: '#fff',

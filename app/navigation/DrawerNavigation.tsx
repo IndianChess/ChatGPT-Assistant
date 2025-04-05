@@ -9,70 +9,71 @@ import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import Chat from '../screens/Chat';
-import Images from '../screens/Images';
-import ApiKeyPage from '../screens/ApiKey';
-import Whisper from '../screens/Whisper';
-
+import Profile from '../screens/Profile';
+import MoodTracker from '../screens/MoodTracker';
+import ComingSoonScreen from '../screens/AddPeople';
+import ComingSoon from '../screens/AddPeople';
 
 type DrawerParamList = {
     Chat: undefined;
-    Images: undefined;
-    Whisper: undefined;
-    ApiKeyPage: undefined;
+    MoodTracker: undefined;
+    GoalSetting: undefined;
+    Journal: undefined;
+    Profile: undefined;
+    AddPeople: undefined;
 };
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
-
-    const openUsagePage = () => {
-        WebBrowser.openBrowserAsync('https://platform.openai.com/account/usage');
-    };
-
     return (
         <View style={styles.container}>
             <DrawerContentScrollView {...props}>
                 <DrawerItem
-                    label='ChatGPT'
+                    label='Chat'
                     labelStyle={styles.drawerItemLabel}
-                    icon={() => <Ionicons name='create-outline' size={24} color='white' />}
+                    icon={() => <Ionicons name='chatbubble-outline' size={24} color='black' />}
                     onPress={() => props.navigation.navigate('Chat')}
                 />
                 <DrawerItem
-                    label='DALL·E'
+                    label='Mood Tracker'
                     labelStyle={styles.drawerItemLabel}
-                    icon={() => <Ionicons name='image-outline' size={24} color='white' />}
-                    onPress={() => props.navigation.navigate('Images')}
+                    icon={() => <Ionicons name='heart-outline' size={24} color='black' />}
+                    onPress={() => props.navigation.navigate('MoodTracker')}
                 />
                 <DrawerItem
-                    label='Whisper'
+                    label='Goals'
                     labelStyle={styles.drawerItemLabel}
-                    icon={() => <Ionicons name='mic-outline' size={24} color='white' />}
-                    onPress={() => props.navigation.navigate('Whisper')}
+                    icon={() => <Ionicons name='flag-outline' size={24} color='black' />}
+                    onPress={() => props.navigation.navigate('GoalSetting')}
+                />
+                <DrawerItem
+                    label='Journal'
+                    labelStyle={styles.drawerItemLabel}
+                    icon={() => <Ionicons name='book-outline' size={24} color='black' />}
+                    onPress={() => props.navigation.navigate('Journal')}
                 />
             </DrawerContentScrollView>
 
             <View style={styles.footerContainer}>
                 <DrawerItem
-                    label='API Key'
+                    label='Profile'
                     labelStyle={styles.drawerItemLabel}
-                    icon={() => <Ionicons name='key-outline' size={24} color='white' />}
-                    onPress={() => props.navigation.navigate('ApiKeyPage')}
+                    icon={() => <Ionicons name='person-outline' size={24} color='black' />}
+                    onPress={() => props.navigation.navigate('Profile')}
                 />
                 <DrawerItem
-                    label='Usage'
+                    label='Add People'
                     labelStyle={styles.drawerItemLabel}
-                    icon={() => <Ionicons name='podium-outline' size={24} color='white' />}
-                    onPress={openUsagePage}
+                    icon={() => <Ionicons name='person-add-outline' size={24} color='black' />}
+                    onPress={() => props.navigation.navigate('AddPeople')}
                 />
             </View>
         </View>
     );
 };
 
-
 export default function DrawerNavigation() {
-
     const navigation = useNavigation();
     const dimensions = useWindowDimensions();
     const isLargeScreen = dimensions.width >= 768;
@@ -82,42 +83,51 @@ export default function DrawerNavigation() {
             initialRouteName='Chat'
             drawerContent={CustomDrawerContent}
             screenOptions={{
-                headerTintColor: '#fff',
+                headerTintColor: '#000',
                 headerStyle: {
-                    backgroundColor: '#0D0D0D',
+                    backgroundColor: '#fff',
+                    borderBottomWidth: 0, // Remove border
+                    elevation: 0, // Remove shadow on Android
+                    shadowOpacity: 0, // Remove shadow on iOS
                 },
                 drawerType: isLargeScreen ? 'permanent' : 'front',
                 headerLeft: isLargeScreen
                     ? () => null
-                    : () => <Ionicons
-                        name='menu'
-                        size={24}
-                        color='white'
-                        style={styles.menuIcon}
-                        onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-                    />
+                    : () => (
+                        <Ionicons
+                          name='menu'
+                          size={24}
+                          color='black'
+                          style={styles.menuIcon}
+                          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                        />
+                    ),
             }}
         >
             <Drawer.Screen name='Chat' component={Chat} />
-            <Drawer.Screen name='Images' component={Images} />
-            <Drawer.Screen name='Whisper' component={Whisper} />
-            <Drawer.Screen name='ApiKeyPage' component={ApiKeyPage} options={{ headerTitle: "API Key" }} />
-        </Drawer.Navigator >
+            <Drawer.Screen name='MoodTracker' component={MoodTracker} options={{ headerTitle: "Mood Tracker" }} />
+            <Drawer.Screen name='GoalSetting' component={ComingSoon} options={{ headerTitle: "Goals" }} />
+            <Drawer.Screen name='Journal' component={ComingSoon} />
+            <Drawer.Screen name='Profile' component={ComingSoon} />
+            <Drawer.Screen name='AddPeople' component={ComingSoon} options={{ headerTitle: "Add People" }} />
+        </Drawer.Navigator>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#171717',
+        // Changed background color for a light theme
+        backgroundColor: '#f7f7f7',
         padding: 8,
         paddingTop: 16,
     },
     drawerItemLabel: {
-        color: '#fff',
+        // Updated label color for light theme
+        color: '#000',
     },
     footerContainer: {
-        borderTopColor: '#ffffff33',
+        borderTopColor: '#00000033',
         borderTopWidth: 1,
         marginBottom: 20,
         paddingTop: 10,
