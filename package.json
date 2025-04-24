@@ -6,9 +6,17 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "ionic:serve": "npm run start"
   },
   "dependencies": {
+    "@capacitor/app": "7.0.1",
+    "@capacitor/cli": "7.2.0",
+    "@capacitor/core": "7.2.0",
+    "@capacitor/haptics": "7.0.1",
+    "@capacitor/ios": "7.2.0",
+    "@capacitor/keyboard": "7.0.1",
+    "@capacitor/status-bar": "7.0.1",
     "@expo/metro-runtime": "~3.2.1",
     "@expo/vector-icons": "^14.0.4",
     "@gradio/client": "^1.14.1",
@@ -42,7 +50,6 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
-    "@types/react-native": "^0.73.0",
     "typescript": "~5.3.3"
   },
   "private": true

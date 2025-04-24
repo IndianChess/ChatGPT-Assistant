@@ -1,0 +1,7 @@
+{
+  "name": "Ami",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}
